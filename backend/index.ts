@@ -1,7 +1,9 @@
 import express, { Express, Request, Response } from 'express';
+require('dotenv').config(); 
 
 const app : Express = express();
 const port = 8000;
+const apiKey = process.env.RAWG_API_KEY; 
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
