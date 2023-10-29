@@ -1,10 +1,13 @@
 "use client";
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() { 
   const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const onClick = function(){
+    router.push('/about');
     inputRef.current!.value ? console.log(inputRef.current!.value) : console.log("Nun");
   } 
 
@@ -18,7 +21,7 @@ export default function HomePage() {
         <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-center" style={{
           top: '30%'
         }}>
-          <span className="text-5xl block text-green-300 italic">LEVEL UP YOUR GAMING EXPERIENCE WITH GAMEFUSION</span>
+          <span className="text-5xl block text-green-300 italic">LEVEL UP YOUR GAMING EXPERIENCE WITH GAMEFUSION 🎮</span>
           <span className="mt-7 text-2xl block text-rose-200">GameFusion is your all-in-one destination for buying, selling, and connecting with fellow gamers in a dynamic and interactive community</span>
         </div>
         <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2" style={{

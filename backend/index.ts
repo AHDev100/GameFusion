@@ -1,14 +1,44 @@
-import express, { Express, Request, Response } from 'express';
-require('dotenv').config(); 
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
 
-const app : Express = express();
-const port = 8000;
-const apiKey = process.env.RAWG_API_KEY; 
+// A schema is a collection of type definitions (hence "typeDefs")
+// that together define the "shape" of queries that are executed against
+// your data.
+const typeDefs = `#graphql
+  type Book {
+    title: String
+    author: String
+  }
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
+  type Query {
+    books: [Book]
+  }
+`;
+
+const books = [
+  {
+    title: 'The Awakening',
+    author: 'Kate Chopin',
+  },
+  {
+    title: 'City of Glass',
+    author: 'Paul Auster',
+  },
+];
+
+const resolvers = {
+  Query: {
+    books: () => books,
+  },
+};
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
 });
 
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+const { url } = await startStandaloneServer(server, {
+  listen: { port: 4000 },
 });
+
+console.log(`🚀  Server ready at: ${url}`);
