@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
-    "rootDirs": ["src"],
-    "outDir": "dist",
-    "lib": ["es2020"],
-    "target": "es2020",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "outDir": "./dist",
+    "lib": ["es2022"],
+    "target": "es2022",
+    "moduleResolution": "nodenext",
+    "module": "NodeNext",
     "esModuleInterop": true,
     "types": ["node"]
-  }
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "./dist" 
+  ]
 }
