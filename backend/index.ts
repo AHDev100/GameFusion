@@ -1,14 +1,15 @@
-import express, { Express, Request, Response } from 'express';
-require('dotenv').config(); 
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
+import typeDefs from './graphql/gameSchema.js';
+import resolvers from './graphql/gameResolvers.js';
 
-const app : Express = express();
-const port = 8000;
-const apiKey = process.env.RAWG_API_KEY; 
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
+const server = new ApolloServer({
+   typeDefs,
+   resolvers,
 });
 
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+ const { url } = await startStandaloneServer(server, {
+   listen: { port: 4000 },
+ });
+
+ console.log(`🚀  Server ready at: ${url}`);
