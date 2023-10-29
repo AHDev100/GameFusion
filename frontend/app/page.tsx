@@ -1,14 +1,33 @@
 "use client";
 import { useRef } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+import client from "./apolloClient";
+import { useLazyQuery, gql } from "@apollo/client";
+
+const GET_GAMES = gql`
+  query GetGames($searchParam: String!) {
+    getGames(searchParam: $searchParam) {
+      name
+      background_image
+      released
+      rating
+      metacritic
+    }
+  }
+`;
 
 export default function HomePage() { 
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
+  const [getGames, { data }] = useLazyQuery(GET_GAMES, {
+    client,
+  });
 
-  const onClick = function(){
-    router.push('/about');
-    inputRef.current!.value ? console.log(inputRef.current!.value) : console.log("Nun");
+  const onClick = async function(){
+    if(inputRef.current!.value){
+      await getGames({variables: { searchParam : inputRef.current!.value}});
+      const games = await data;
+      console.log(games.getGames[0]);
+    }
   } 
 
   return (
@@ -30,7 +49,7 @@ export default function HomePage() {
           <input ref={inputRef} className="relative p-2 pr-12 rounded-full border-2 border-gray-300 focus:outline-none" type="text" placeholder="🔎 Enter your game..." />
           <button onClick={onClick} type="button" className="relative mx-2 bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center text-white dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Search</button>
         </div>
-      </div>      
+      </div>
     </>
   )
 }
