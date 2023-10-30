@@ -1,32 +1,14 @@
 "use client";
 import { useRef } from "react";
-// import { useRouter } from "next/navigation";
-import client from "./apolloClient";
-import { useLazyQuery, gql } from "@apollo/client";
-
-const GET_GAMES = gql`
-  query GetGames($searchParam: String!) {
-    getGames(searchParam: $searchParam) {
-      name
-      background_image
-      released
-      rating
-      metacritic
-    }
-  }
-`;
+import { useRouter } from "next/navigation";
 
 export default function HomePage() { 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [getGames, { data }] = useLazyQuery(GET_GAMES, {
-    client,
-  });
+  const router = useRouter();
 
   const onClick = async function(){
     if(inputRef.current!.value){
-      await getGames({variables: { searchParam : inputRef.current!.value}});
-      const games = await data;
-      console.log(games.getGames[0]);
+      router.push(`/search?searchParam=${inputRef.current!.value}`);
     }
   } 
 
