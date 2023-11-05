@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import key from '../helpers/key.js';
 
 interface Game {
     name: String;
@@ -12,7 +13,7 @@ interface ApiResponse {
 }
   
 const fetchGames = async (searchParam : String) => {
-    const response = await fetch(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&search=${searchParam}}&page_size=10`);
+    const response = await fetch(`https://api.rawg.io/api/games?key=${key}&search=${searchParam}}&page_size=10`);
     const data = await response.json() as ApiResponse;
     return data.results;
 };

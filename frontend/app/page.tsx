@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
+import PopularGame from "./components/popGames";
 
 export default function HomePage() { 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -15,7 +16,7 @@ export default function HomePage() {
   return (
     <>  
       <div style={{ 
-        backgroundImage: `url("https://static.vecteezy.com/system/resources/previews/007/620/908/non_2x/blue-wave-abstract-background-web-background-blue-texture-banner-design-creative-cover-design-backdrop-minimal-background-illustration-vector.jpg")`, 
+        backgroundImage: `url("https://wallpaperaccess.com/full/2505720.jpg")`, 
         backgroundSize: 'cover', 
         height: 'calc(100vh - 10.5vh)' 
       }}>
@@ -31,6 +32,35 @@ export default function HomePage() {
           <input ref={inputRef} className="relative p-2 pr-12 rounded-full border-2 border-gray-300 focus:outline-none" type="text" placeholder="🔎 Enter your game..." />
           <button onClick={onClick} type="button" className="relative mx-2 bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center text-white dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Search</button>
         </div>
+      </div>
+      <div className="absolute hover:scale-110 transition-transform transform" 
+            style={{
+              bottom: 35, 
+              display: "flex",
+              left: "42%"
+            }}
+      >
+        <PopularGame price="79.99" imgSRC="https://s25.q4cdn.com/103200307/files/doc_multimedia/FC24_standardkeyart_16x9.jpg" name="EA Sports FC 24"/>
+      </div>
+      <div className="absolute hover:scale-110 transition-transform transform" 
+            style={{
+              bottom: 35,  
+              display: "flex",
+              overflow: "hidden", 
+              left: "20%"
+            }}
+      >
+        <PopularGame price="79.99" imgSRC="https://www.techpowerup.com/img/w2xp4R8Hm8OX3YNt.jpg" name="EA Sports NHL 24" />
+      </div>
+      <div className="absolute hover:scale-110 transition-transform transform" 
+            style={{
+              bottom: 35,  
+              display: "flex",
+              overflow: "hidden", 
+              left: "64%"
+            }}
+      >
+        <PopularGame price="119.99" imgSRC="https://cdn.cloudflare.steamstatic.com/steam/apps/2338770/extras/NBA24-BASE-METADATA-STEAM_Main_Capsule_616x353.jpg?t=1697814723" name="NBA 2K 24" />
       </div>
     </>
   )
