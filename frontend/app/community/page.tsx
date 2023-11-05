@@ -3,7 +3,7 @@ import StyledInstagram from "../assets/Instagram";
 import StyledDiscord from "../assets/Discord";
 
 export default function Community() {
-    const connectImageURL = "https://swall.teahub.io/photos/small/134-1348814_free-space-backgrounds-group-space-invaders-game-background.jpg";
+    const connectImageURL = "https://www.veeforu.com/wp-content/uploads/2023/01/Metallic-pieces-in-design-with-blue-stroke-gaming-background.jpg";
     return (
         <>
             <div style={{
