@@ -2,11 +2,13 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import typeDefs from './graphql/gameSchema.js';
 import resolvers from './graphql/gameResolvers.js';
-import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 import { createClient } from 'redis';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
+import { Sequelize, DataTypes } from 'sequelize';
+import db from './db/db.js';
+import User from './db/models/User.js';
 
 dotenv.config();
 
@@ -17,6 +19,18 @@ const server = new ApolloServer({
   resolvers,
 });
 
+await db.sync({ force: true });
+console.log("All models were synchronized successfully.");
+
+const newUser = await User.create({
+  username: 'johndoe',
+  password: 'password123', // make sure to hash the password before storing
+});
+await newUser.save();
+
+const user = await User.findOne({ where: { username: 'johndoe' } });
+console.log(user.dataValues.password);
+
 const startRedis = async () => {
   const redisClient = createClient(); 
   await redisClient.connect();
@@ -25,22 +39,10 @@ const startRedis = async () => {
   console.log(myKeyValue);
 }
 
-const db = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER}`, `${process.env.DB_PWD}`, {
-  host: 'localhost', 
-  dialect: 'postgres', 
-  port: 5432,
-});
-
-db.authenticate().then(() => {
-  console.log('Connection to GameFusion db established successfully!');
-  startRedis();
-}).catch((err) => {
-  console.error('Unable to connect: ', err)
-})
-
 async function startServer() {
   await server.start();
   server.applyMiddleware({ app, path: '/graphql' });
+  startRedis();
 }
 
 app.get('/', (req, res) => {
@@ -51,4 +53,6 @@ startServer().then(() => {
   app.listen({ port: 4000 }, () => {
     console.log(`🚀 Server ready at http://localhost:4000/graphql`);
   });
+}).catch((err) => {
+  console.error(`Unable to connect to server: ${err}`);
 });
