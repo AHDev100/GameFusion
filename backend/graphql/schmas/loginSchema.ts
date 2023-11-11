@@ -1,11 +1,11 @@
 const loginDefs = `#graphql 
-    type Login {
-        userName: String!
-        passWord: String!
+    type Auth {
+        isAuth: Boolean!, 
+        token: String!
     }
 
     type Mutation {
-        login(userName: String!, passWord: String!): Boolean
+        login(userName: String!, passWord: String!): Auth
     }
 `; 
 

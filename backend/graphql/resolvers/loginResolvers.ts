@@ -2,9 +2,10 @@ import isUserAuth from "../models/loginModel.js"
 
 const loginResolvers = {
     Mutation: {
-        login : async (_, args) => {
-            let isAuth = await isUserAuth(args.userName, args.passWord);
-            return isAuth;
+        login : async (_, args, { res }) => {
+            let auth = await isUserAuth(args.userName, args.passWord);
+            res.cookie('token', auth.token, { httpOnly: true });
+            return auth;
         }
     }
 };

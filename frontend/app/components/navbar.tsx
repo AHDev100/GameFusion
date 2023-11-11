@@ -8,11 +8,11 @@ export const Navbar = () : any => {
     const router = useRouter();
 
     function navigateloginPage(){
-        router.push("/login");
+        router.push("/auth/login");
     }
 
     function navigateregistrationPage(){
-        router.push("/register");
+        router.push("/auth/register");
     }
 
     return (

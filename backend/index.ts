@@ -7,6 +7,8 @@ import gameDefs from './graphql/schmas/gameSchema.js';
 import gameResolvers from './graphql/resolvers/gameResolvers.js';
 import loginDefs from './graphql/schmas/loginSchema.js';
 import loginResolvers from './graphql/resolvers/loginResolvers.js';
+import registerDefs from './graphql/schmas/registerSchema.js';
+import registerResolvers from './graphql/resolvers/regsisterResolvers.js';
 
 //DB + Caching Imports
 import { createClient } from 'redis';
@@ -21,30 +23,28 @@ const server = new ApolloServer({
   typeDefs: [
     gameDefs,
     loginDefs,
+    registerDefs,
   ],
   resolvers: [
     gameResolvers, 
     loginResolvers,
+    registerResolvers,
   ],
+  context: ({ req }) => {
+    // The return value of this function becomes your context
+    return req;
+  },
 });
 
-await db.sync({ force: true });
+await db.sync(); // Note: remove force option if you want to persist data
 console.log("All models were synchronized successfully.");
 
-const newUser = await User.create({
-  username: 'johndoe',
-  password: 'password123', // make sure to hash the password before storing
-});
-await newUser.save();
-
-const user = await User.findOne({ where: { username: 'johndoe' } });
-console.log(user.dataValues.password);
+const users = await User.findAll();
+console.log(users);
 
 const startRedis = async () => {
   const redisClient = createClient(); 
   await redisClient.connect();
-  const myKeyValue = await redisClient.get('mykey');
-  console.log(myKeyValue);
 }
 
 async function startServer() {
