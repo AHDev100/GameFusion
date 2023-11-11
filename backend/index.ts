@@ -1,22 +1,31 @@
+//Server Imports
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import typeDefs from './graphql/gameSchema.js';
-import resolvers from './graphql/gameResolvers.js';
-import dotenv from 'dotenv';
+
+//GraphQL Imports
+import gameDefs from './graphql/schmas/gameSchema.js';
+import gameResolvers from './graphql/resolvers/gameResolvers.js';
+import loginDefs from './graphql/schmas/loginSchema.js';
+import loginResolvers from './graphql/resolvers/loginResolvers.js';
+
+//DB + Caching Imports
 import { createClient } from 'redis';
 import connectRedis from 'connect-redis';
-import session from 'express-session';
 import { Sequelize, DataTypes } from 'sequelize';
 import db from './db/db.js';
 import User from './db/models/User.js';
 
-dotenv.config();
-
 const app = express();
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  typeDefs: [
+    gameDefs,
+    loginDefs,
+  ],
+  resolvers: [
+    gameResolvers, 
+    loginResolvers,
+  ],
 });
 
 await db.sync({ force: true });
@@ -34,7 +43,6 @@ console.log(user.dataValues.password);
 const startRedis = async () => {
   const redisClient = createClient(); 
   await redisClient.connect();
-  await redisClient.set('mykey', 'Hello from node redis');
   const myKeyValue = await redisClient.get('mykey');
   console.log(myKeyValue);
 }
