@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import key from '../helpers/key.js';
+import key from '../../helpers/key.js';
 
 interface Game {
     name: String;

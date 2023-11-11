@@ -1,4 +1,4 @@
-const typeDefs = `#graphql
+const gameDefs = `#graphql
 type Game {
     name: String!
     background_image: String!
@@ -12,4 +12,4 @@ type Query {
 }
 `;
 
-export default typeDefs;
+export default gameDefs;

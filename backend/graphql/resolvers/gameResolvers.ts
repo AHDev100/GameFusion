@@ -1,6 +1,6 @@
-import fetchGames from "./gamesModel.js";
+import fetchGames from "../models/gamesModel.js";
 
-const resolvers = {
+const gameResolvers = {
     Query : {
         getGames : async (_, args) => {
             let games = await fetchGames(args.searchParam);
@@ -9,4 +9,4 @@ const resolvers = {
     }
  }; 
 
- export default resolvers; 
+ export default gameResolvers; 
