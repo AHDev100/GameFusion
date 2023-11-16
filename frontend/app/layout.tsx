@@ -6,7 +6,7 @@ import { Navbar } from "./components/navbar";
 import { ApolloProvider } from '@apollo/client';
 import client from './apolloClient'; 
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,

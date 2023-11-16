@@ -2,6 +2,7 @@
 import { Logo } from "@/app/assets/logo";
 import { useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
+import { useRouter } from "next/navigation";
 
 const LOGIN = gql`
   mutation Login($userName: String!, $passWord: String!) {
@@ -16,16 +17,25 @@ export default function LoginPage() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
+  const router = useRouter();  
+
   const [login] = useMutation(LOGIN);
 
   const handleSubmit = async () => {
-    const res = await login({
-        variables: {
-        userName: "help",
-        passWord: "me",
-    }});
-    console.log(res);
-    return res; 
+    if(!usernameRef.current?.value.length || !passwordRef.current?.value.length){
+        alert(`Can't login with no info!`);
+    } else {
+        await login({
+            variables: {
+            userName: usernameRef.current?.value,
+            passWord: passwordRef.current?.value,
+        }}).then((res) => {  
+            console.log(res);
+            if(res.data.login.isAuth){
+                sessionStorage.setItem('token', res.data.login.token);
+            }
+        });
+    }
   };
 
     return (

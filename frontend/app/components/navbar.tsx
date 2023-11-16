@@ -1,20 +1,9 @@
 "use client";
-import { Logo } from "../assets/logo";
-import { useRouter } from "next/navigation";
 
+import { Logo } from "../assets/logo";
+import Status from "../utils/login";
 
 export const Navbar = () : any => {
-
-    const router = useRouter();
-
-    function navigateloginPage(){
-        router.push("/auth/login");
-    }
-
-    function navigateregistrationPage(){
-        router.push("/auth/register");
-    }
-
     return (
         <div>
             <nav className="flex items-center justify-between flex-wrap bg-red-500 p-6">
@@ -37,9 +26,8 @@ export const Navbar = () : any => {
                             Support
                         </a>
                     </div>
-                    <div>
-                        <button onClick={navigateloginPage} className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-red-800 hover:bg-white mt-4 lg:mt-0 mx-2">Login</button>
-                        <button onClick={navigateregistrationPage} className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-red-800 hover:bg-white mt-4 lg:mt-0 mx-2">Register</button>                    
+                    <div>                    
+                        <Status />
                     </div>
                 </div>
             </nav>

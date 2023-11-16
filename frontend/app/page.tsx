@@ -1,6 +1,8 @@
 "use client";
+
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
+
 import PopularGame from "./components/popGames";
 
 export default function HomePage() { 
@@ -14,7 +16,7 @@ export default function HomePage() {
   } 
 
   return (
-    <>  
+    <> 
       <div style={{ 
         backgroundImage: `url("https://wallpaperaccess.com/full/2505720.jpg")`, 
         backgroundSize: 'cover', 
