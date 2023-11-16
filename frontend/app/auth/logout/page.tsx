@@ -1,42 +1,41 @@
 "use client";
-import { Logo } from "@/app/assets/logo";
+
 import { useRef } from "react";
-import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
+import { gql, useMutation } from "@apollo/client";
 
-const LOGIN = gql`
-  mutation Login($userName: String!, $passWord: String!) {
-    login(userName: $userName, passWord: $passWord) {
-      isAuth
-      token
+import { Logo } from "@/app/assets/logo";
+
+export default function LoggingOut() {
+
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const router = useRouter();
+
+    const LOGOUT = gql`
+        mutation Login($userName: String!, $passWord: String!) {
+            logout(userName: $userName, passWord: $passWord)
+        }
+    `;
+
+    const [logout] = useMutation(LOGOUT);
+
+    const confirmLogout = async () => {
+        if(!usernameRef.current?.value.length || !passwordRef.current?.value.length){
+            alert(`Can't login with no info!`);
+        } else {
+            const res = await logout({
+                variables: {
+                userName: usernameRef.current?.value,
+                passWord: passwordRef.current?.value,
+            }}).then((res) => {
+                if(res.data.logout){
+                    sessionStorage.removeItem("token"); 
+                    alert(`You've been logged out`);
+                }
+            }); 
+        }
     }
-  }
-`;
-
-export default function LoginPage() {
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-
-  const router = useRouter();  
-
-  const [login] = useMutation(LOGIN);
-
-  const handleSubmit = async () => {
-    if(!usernameRef.current?.value.length || !passwordRef.current?.value.length){
-        alert(`Can't login with no info!`);
-    } else {
-        await login({
-            variables: {
-            userName: usernameRef.current?.value,
-            passWord: passwordRef.current?.value,
-        }}).then((res) => {  
-            console.log(res);
-            if(res.data.login.isAuth){
-                sessionStorage.setItem('token', res.data.login.token);
-            }
-        });
-    }
-  };
 
     return (
         <>
@@ -48,8 +47,8 @@ export default function LoginPage() {
                     </a>
                     <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                                Sign in to your account
+                            <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                                Confirm to Log Out of Your Account
                             </h1>
                             <form className="space-y-4 md:space-y-6" action="#">
                                 <div>
@@ -71,10 +70,7 @@ export default function LoginPage() {
                                     </div>
                                     <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                                 </div>
-                                <button onClick={handleSubmit} type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
-                                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                    Don’t have an account yet? <a href="/auth/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
-                                </p>
+                                <button onClick={confirmLogout} type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Log Out</button>
                             </form>
                         </div>
                     </div>
