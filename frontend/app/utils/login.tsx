@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 function LoggedOut(){
     const router = useRouter();
+    const pathname = usePathname();
 
     function navigateloginPage(){
         router.push("/auth/login");
@@ -37,6 +38,7 @@ function LoggedIn() {
 export default function Status() {
   const [token, setToken] = useState<any>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     function handleStorageChange() {
@@ -47,7 +49,12 @@ export default function Status() {
   }, []);
 
   useEffect(() => {
-    token ? router.push('/dashboard') : router.push('/');
+    // token ? router.push('/dashboard') : router.push('/');
+    if(token && (pathname == '/dashboard' || pathname == '/auth/login')){
+        router.push('/dashboard'); 
+    } else if (!token && (pathname == '/'|| pathname == '/auth/logout')){
+        router.push('/');
+    }
   }, [token]);
 
   return token ? <LoggedIn /> : <LoggedOut />;
