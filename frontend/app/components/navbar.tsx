@@ -22,9 +22,6 @@ export const Navbar = () : any => {
                         <a href="/about" className="block mt-4 lg:inline-block lg:mt-0 text-neutral-200 hover:text-white hover:underline text-base">
                             About
                         </a>
-                        <a href="/support" className="block mt-4 lg:inline-block lg:mt-0 text-neutral-200 hover:text-white hover:underline text-base mx-4">
-                            Support
-                        </a>
                     </div>
                     <div>                    
                         <Status />
