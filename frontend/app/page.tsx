@@ -18,7 +18,7 @@ export default function HomePage() {
   return (
     <> 
       <div style={{ 
-        backgroundImage: `url("https://wallpaperaccess.com/full/2505720.jpg")`, 
+        background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(118,35,134,1) 0%, rgba(0,142,255,1) 133%)', 
         backgroundSize: 'cover', 
         height: 'calc(100vh - 10.5vh)' 
       }}>
