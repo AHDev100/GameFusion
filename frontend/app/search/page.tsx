@@ -4,7 +4,7 @@ import { useQuery, gql } from "@apollo/client";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Game } from "../types/types";
-import Rating from "../components/getStars";
+import Rating from "../components/stars/getStars";
 
 const GET_GAMES = gql`
   query GetGames($searchParam: String!) {
