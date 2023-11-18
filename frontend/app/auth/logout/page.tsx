@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import { useRouter } from "next/navigation";
 import { gql, useMutation } from "@apollo/client";
 
 import { Logo } from "@/app/assets/logo";
@@ -10,7 +9,6 @@ export default function LoggingOut() {
 
     const usernameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    const router = useRouter();
 
     const LOGOUT = gql`
         mutation Login($userName: String!, $passWord: String!) {
@@ -24,7 +22,7 @@ export default function LoggingOut() {
         if(!usernameRef.current?.value.length || !passwordRef.current?.value.length){
             alert(`Can't login with no info!`);
         } else {
-            const res = await logout({
+            await logout({
                 variables: {
                 userName: usernameRef.current?.value,
                 passWord: passwordRef.current?.value,
