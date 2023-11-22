@@ -13,7 +13,7 @@ interface ApiResponse {
 }
   
 const fetchGames = async (searchParam : String) => {
-    const response = await fetch(`https://api.rawg.io/api/games?key=${key}&search=${searchParam}}&page_size=10`);
+    const response = await fetch(`https://api.rawg.io/api/games?key=${key}&search=${searchParam}}&page_size=12`);
     const data = await response.json() as ApiResponse;
     return data.results;
 };
