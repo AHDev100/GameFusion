@@ -38,21 +38,21 @@ function LoggedIn() {
 
 export default function Status() {
     const [token, setToken] = useState<any>(null);
-    const [loading, setLoading] = useState(true); // Add a new state for loading
+    const [loading, setLoading] = useState(true); 
     const router = useRouter();
     const pathname = usePathname();
   
     useEffect(() => {
       function handleStorageChange() {
         setToken(sessionStorage.getItem('token'));
-        setLoading(false); // Set loading to false after token is updated
+        setLoading(false); 
       }
   
       handleStorageChange();
     }, []);
   
     useEffect(() => {
-      if (!loading) { // Only push a new route if not loading
+      if (!loading) { 
         if (token && (pathname == '/dashboard' || pathname == '/auth/login')) {
           router.push('/dashboard'); 
         } else if (!token && (pathname == '/'|| pathname == '/auth/logout')) {
@@ -60,8 +60,7 @@ export default function Status() {
         }
       }
     }, [token, loading]);
-  
-    // Render a placeholder button if loading, otherwise render based on token
+    
     return loading ? <PlaceholderButton /> : (token ? <LoggedIn /> : <LoggedOut />);
   }
   
