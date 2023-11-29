@@ -1,8 +1,39 @@
+"use client"
+
+import { useState, useEffect } from "react";
+import { useQuery, gql } from "@apollo/client";
+import { Game } from "../types/types";
+import Rating from "../components/stars/getStars";
+import './scroll.css';
+
+const GET_MAIN_GAMES = gql`
+  query GetMainGames {
+    getMainGames {
+      name
+      background_image
+      released
+      rating
+      metacritic
+    }
+  }
+`;
+
 export default function Dashboard(){
+    const [games, setGames] = useState<any>([]); 
+    
+    const { loading, error, data } = useQuery(GET_MAIN_GAMES);
+
+    useEffect(() => {
+        if (data && !loading){
+            console.log(data);
+            setGames(data.getMainGames);
+        }
+    }, [data])
+    
     return (
-        <>
-            <div className="fixed top-1/5 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-                <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div className="flex h-screen overflow-hidden">
+            <div className="overflow-auto top-1/5 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+                <div className="h-full px-3 py-4 bg-gray-50 dark:bg-gray-800">
                     <ul className="space-y-2 font-medium">
                         <li>
                             <a href="/dashboard" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -68,11 +99,20 @@ export default function Dashboard(){
                     </ul>
                 </div>
             </div>
-            <div className="pl-64 grid grid-cols-3 gap-4">
-                {Array.from({ length: 10 }, (_, i) => (
-                    <div key={i} className="aspect-w-1 aspect-h-1 bg-blue-500">yo</div>
-                ))}
+            <div className="overflow-y-auto justify-center flex-1 min-h-screen bg-gradient-to-r from-gray-700 to-emerald-800 border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700">
+                <div className="grid grid-cols-4 gap-4">
+                    {loading ? <p>Loading...</p> : games.map((game : Game, index : any) => (
+                        <div key={index} className="bg-black text-white p-3 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <img className="w-full h-64 object-cover mb-4 hover:scale-105" src={game.background_image} alt={`${game.name}`}/>
+                        <div>
+                            <p className="font-semibold text-l text-white text-shadow-md">{game.name}</p>
+                            {game.rating ? <Rating Rating={game.rating}/> : <p>Rating unavailable</p>}
+                        </div>
+                        </div>
+                    ))}
+                </div>
+                {error ? <p>Error...</p> : null}
             </div>
-        </>
+        </div>
     )
 }

@@ -18,4 +18,10 @@ const fetchGames = async (searchParam : String) => {
     return data.results;
 };
 
-export default fetchGames; 
+const dashboardGames = async () => {
+    const response = await fetch(`https://api.rawg.io/api/games?key=${key}&page_size=15`);
+    const data = await response.json() as ApiResponse;
+    return data.results;
+}; 
+
+export { fetchGames, dashboardGames }; 

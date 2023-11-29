@@ -9,6 +9,7 @@ type Game {
 
 type Query {
     getGames(searchParam: String!): [Game]
+    getMainGames: [Game]
 }
 `;
 
