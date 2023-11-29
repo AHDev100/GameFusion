@@ -5,13 +5,17 @@ import db from '../db.js';
 const User = db.define('User', {
   username: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   password: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING, 
+    allowNull: false,
   },
   token: {
-    type: DataTypes.STRING // You might want to adjust the data type or length based on your requirements
+    type: DataTypes.STRING 
+  }, 
+  pfp: {
+    type: DataTypes.STRING
   }
 });
 

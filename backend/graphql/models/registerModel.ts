@@ -5,6 +5,7 @@ const addUser = async (newUsername : String, newPassword : String) => {
         username: newUsername, 
         password: newPassword,
         token: "",
+        pfp: "",
     }); 
     await newUser.save();
     const user = await User.findOne({ where: { username: newUsername, password: newPassword } });

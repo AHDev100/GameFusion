@@ -4,13 +4,9 @@ import { ApolloServer } from 'apollo-server-express';
 
 //GraphQL Imports
 import gameDefs from './graphql/schmas/gameSchema.js';
+import authDefs from './graphql/schmas/authdefs.js';
 import gameResolvers from './graphql/resolvers/gameResolvers.js';
-import loginDefs from './graphql/schmas/loginSchema.js';
-import loginResolvers from './graphql/resolvers/loginResolvers.js';
-import registerDefs from './graphql/schmas/registerSchema.js';
-import registerResolvers from './graphql/resolvers/regsisterResolvers.js';
-import logoutDefs from './graphql/schmas/logoutSchema.js';
-import logoutResolver from './graphql/resolvers/logoutResolver.js';
+import authResolvers from './graphql/resolvers/authResolvers.js';
 
 //DB + Caching Imports
 import db from './db/db.js';
@@ -21,15 +17,11 @@ const app = express();
 const server = new ApolloServer({
   typeDefs: [
     gameDefs,
-    loginDefs,
-    registerDefs,
-    logoutDefs,
+    authDefs,
   ],
   resolvers: [
     gameResolvers, 
-    loginResolvers,
-    registerResolvers,
-    logoutResolver
+    authResolvers
   ],
 });
 
