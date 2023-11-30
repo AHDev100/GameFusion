@@ -1,4 +1,4 @@
-import { fetchGames, dashboardGames } from "../models/gamesModel.js";
+import { fetchGames, dashboardGames, fetchPlatforms } from "../models/gamesModel.js";
 
 const gameResolvers = {
     Query : {
@@ -9,6 +9,10 @@ const gameResolvers = {
         getMainGames : async () => {
             let mainGames = await dashboardGames(); 
             return mainGames; 
+        }, 
+        getPlatforms: async () => {
+            let platforms = await fetchPlatforms(); 
+            return platforms; 
         }
     }
  }; 

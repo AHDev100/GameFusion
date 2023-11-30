@@ -9,4 +9,5 @@ export interface Game {
     released : String, 
     rating : number, 
     metacritic : number,
+    id: String,
 }

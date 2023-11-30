@@ -14,6 +14,7 @@ const GET_GAMES = gql`
       released
       rating
       metacritic
+      id
     }
   }
 `;
