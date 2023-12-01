@@ -15,6 +15,10 @@ export default function HomePage() {
     }
   } 
 
+  //EA Sports FC 24 - ID = 963218
+  //NBA 2K24 - ID = 966119
+  //EA Sports NHL 24 - ID not found, we'll just use 23 for now: ID = 857615
+
   return (
     <> 
       <div style={{ 

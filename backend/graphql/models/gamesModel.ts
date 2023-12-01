@@ -2,10 +2,11 @@ import fetch from 'node-fetch';
 import key from '../../helpers/key.js';
 
 interface Game {
-    name: String;
-    background_image: String;
-    released: String; 
-    ratings: Object;
+    name: String
+    id: String
+    background_image: String
+    released: String
+    ratings: Object
 }
   
 interface ApiResponse {
@@ -24,4 +25,10 @@ const dashboardGames = async () => {
     return data.results;
 }; 
 
-export { fetchGames, dashboardGames }; 
+const fetchPlatforms = async () => {
+    const response = await fetch(`https://api.rawg.io/api/platforms?key=${key}&ordering=-games_count&page_size=15`);
+    const data = await response.json(); 
+    return data; 
+}
+
+export { fetchGames, dashboardGames, fetchPlatforms }; 
