@@ -26,7 +26,7 @@ const dashboardGames = async () => {
 }; 
 
 const fetchPlatforms = async () => {
-    const response = await fetch(`https://api.rawg.io/api/platforms?key=${key}`);
+    const response = await fetch(`https://api.rawg.io/api/platforms?key=${key}&ordering=-games_count&page_size=15`);
     const data = await response.json(); 
     return data; 
 }
