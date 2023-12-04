@@ -5,8 +5,10 @@ import { ApolloServer } from 'apollo-server-express';
 //GraphQL Imports
 import gameDefs from './graphql/schmas/gameSchema.js';
 import authDefs from './graphql/schmas/authdefs.js';
+import { userDefs } from './graphql/schmas/userInfoSchema.js';
 import gameResolvers from './graphql/resolvers/gameResolvers.js';
 import authResolvers from './graphql/resolvers/authResolvers.js';
+import { userResolvers } from './graphql/resolvers/userResolvers.js';
 
 //DB + Caching Imports
 import db from './db/db.js';
@@ -18,10 +20,12 @@ const server = new ApolloServer({
   typeDefs: [
     gameDefs,
     authDefs,
+    userDefs
   ],
   resolvers: [
     gameResolvers, 
-    authResolvers
+    authResolvers,
+    userResolvers
   ],
 });
 

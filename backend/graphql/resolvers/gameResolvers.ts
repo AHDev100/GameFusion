@@ -1,4 +1,4 @@
-import { fetchGames, dashboardGames, fetchPlatforms } from "../models/gamesModel.js";
+import { fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags } from "../models/gamesModel.js";
 
 const gameResolvers = {
     Query : {
@@ -13,6 +13,14 @@ const gameResolvers = {
         getPlatforms: async () => {
             let platforms = await fetchPlatforms(); 
             return platforms; 
+        }, 
+        getGenres: async () => {
+            let genres = await fetchGenres(); 
+            return genres; 
+        }, 
+        getTags: async () => {
+            let tags = await fetchTags(); 
+            return tags; 
         }
     }
  }; 
