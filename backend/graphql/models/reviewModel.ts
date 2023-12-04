@@ -14,7 +14,12 @@ export const addReview = async (reviewer : Number, review : String, rating: Numb
     return reviewAdded ? true : false;
 }; 
 
-export const findAll = (publisher: Number) => {
+export const findAllByUser = (publisher: Number) => {
     const reviews = Review.findAll({where: {reviewerID: publisher}}); 
+    return reviews; 
+}; 
+
+export const findAll = async () => {
+    const reviews = Review.findAll(); 
     return reviews; 
 }

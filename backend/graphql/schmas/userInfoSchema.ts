@@ -13,7 +13,7 @@ export const userDefs = `#graphql
     }
 
     type Review {
-        publisher: ID
+        reviewerID: ID
         review: String 
         rating: Int 
         title: String 
@@ -25,7 +25,8 @@ export const userDefs = `#graphql
     type Query {
         getUserDetails(token: String): User
         getUsers(user: String!, filter: String!): [Users]
-        getAllReviews(publisher: ID!): [Review]
+        getAllReviews: [Review]
+        getAllUserReviews(publisher: ID!): [Review]
     }
 
     type Mutation {

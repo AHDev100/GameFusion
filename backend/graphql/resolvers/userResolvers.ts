@@ -1,5 +1,5 @@
 import { getUserDetails, filterUsers } from "../models/userProfile.js";
-import { addReview, findAll } from "../models/reviewModel.js";
+import { addReview, findAll, findAllByUser } from "../models/reviewModel.js";
 
 export const userResolvers = {
     Query : {
@@ -11,8 +11,12 @@ export const userResolvers = {
             const users = await filterUsers(args.user, args.filter);
             return users;
         }, 
-        getAllReviews: async (_, args) => {
-            const reviews = await findAll(args.publisher); 
+        getAllReviews: async () => {
+            const reviews = await findAll(); 
+            return reviews; 
+        }, 
+        getAllUserReviews: async (_, args) => {
+            const reviews = await findAllByUser(args.publisher); 
             return reviews; 
         }
     }, 
