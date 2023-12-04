@@ -6,7 +6,14 @@ export const userDefs = `#graphql
         pfp: String 
     }
 
+    type Users {
+        id: ID
+        username: String
+        pfp: String  
+    }
+
     type Query {
         getUserDetails(token: String): User
+        getUsers(user: String!, filter: String!): [Users]
     }
 `;

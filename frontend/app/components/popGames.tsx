@@ -2,7 +2,7 @@ export default function PopularGame(props : any){
     return ( 
         <div className="w-full max-w-sm bg-gradient-to-r from-gray-700 to-emerald-800 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
-                <img style={{ width:"370px", maxHeight: "220px" }} className="p-8 rounded-t-lg" src={props.imgSRC} alt="product image" />
+                <img style={{ width:"300px", maxHeight: "220px" }} className="p-8 rounded-t-lg" src={props.imgSRC} alt="product image" />
             </a>
             <div className="px-5 pb-5">
                 <a href="#">

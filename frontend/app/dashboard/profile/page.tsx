@@ -1,28 +1,28 @@
 "use client"
 
 import { useEffect, useState } from "react";
-// import { useQuery, gql } from "@apollo/client"
+import { useQuery, gql } from "@apollo/client"
 
-// const GET_PROFILE_INFO  = gql`
-//     query GetUserDetails($token: String){
-//         getUserDetails(token: $token){
-//             id
-//             username
-//             password
-//             pfp
-//         }
-//     }
-// `;
+const GET_PROFILE_INFO  = gql`
+    query GetUserDetails($token: String){
+        getUserDetails(token: $token){
+            id
+            username
+            password
+            pfp
+        }
+    }
+`;
 
 export default function profile(){
-    // const [token, setToken] = useState<String | null>("");
-    // useEffect(() => {
-    //     setToken(sessionStorage.getItem("token"))
-    // }, [])
-    // const { loading, error, data } = useQuery(GET_PROFILE_INFO, {
-    //     variables: {token: token},
-    // });
-    // console.log(data);
+    const [token, setToken] = useState<String | null>("");
+    useEffect(() => {
+        setToken(sessionStorage.getItem("token"))
+    }, [])
+    const { loading, error, data } = useQuery(GET_PROFILE_INFO, {
+        variables: {token: token},
+    });
+    console.log(data);
     const [showPassword, setShowPassword] = useState(false);
 
     return (
