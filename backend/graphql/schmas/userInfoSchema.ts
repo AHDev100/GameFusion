@@ -12,8 +12,23 @@ export const userDefs = `#graphql
         pfp: String  
     }
 
+    type Review {
+        publisher: ID
+        review: String 
+        rating: Int 
+        title: String 
+        likes: Int 
+        dislikes: Int
+        created_at: String 
+    }
+
     type Query {
         getUserDetails(token: String): User
         getUsers(user: String!, filter: String!): [Users]
+        getAllReviews(publisher: ID!): [Review]
+    }
+
+    type Mutation {
+        addReview(publisher: ID!, review: String!, rating: Int!, title: String!): Boolean
     }
 `;

@@ -44,7 +44,7 @@ export default function platforms(){
                     </div>
                 )) : <p>Error Loading Platforms...</p>}
             </div>
-            {error ? <p>Error...</p> : null}
+            {error && <p>Error...</p>}
         </div>
     )
 }
