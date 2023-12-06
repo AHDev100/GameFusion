@@ -5,9 +5,9 @@ export default function Rating({ Rating } : { Rating : number }){
     const starsArray : any[] = [];
     const intRating = Math.round(Rating-1);
     for(let i = 0; i < 5; i++){
-        if(i <= intRating){
+        if (i <= intRating) {
             starsArray.push(<FullStar />);
-        } else if(i < 5) {
+        } else {
             starsArray.push(<BlankStar />);
         }
     }

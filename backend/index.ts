@@ -13,6 +13,7 @@ import { userResolvers } from './graphql/resolvers/userResolvers.js';
 //DB + Caching Imports
 import db from './db/db.js';
 import User from './db/models/User.js';
+import Review from './db/models/Review.js';
 
 const app = express();
 
@@ -34,6 +35,9 @@ console.log("All models were synchronized successfully.");
 
 const users = await User.findAll();
 console.log(users);
+
+const review = await Review.findAll();
+console.log(review);
 
 async function startServer() {
   await server.start();
