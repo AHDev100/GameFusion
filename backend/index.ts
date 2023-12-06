@@ -3,9 +3,9 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 
 //GraphQL Imports
-import gameDefs from './graphql/schmas/gameSchema.js';
-import authDefs from './graphql/schmas/authdefs.js';
-import { userDefs } from './graphql/schmas/userInfoSchema.js';
+import gameDefs from './graphql/schemas/gameSchema.js';
+import authDefs from './graphql/schemas/authdefs.js';
+import { userDefs } from './graphql/schemas/userInfoSchema.js';
 import gameResolvers from './graphql/resolvers/gameResolvers.js';
 import authResolvers from './graphql/resolvers/authResolvers.js';
 import { userResolvers } from './graphql/resolvers/userResolvers.js';
