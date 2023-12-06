@@ -1,5 +1,5 @@
 import { getUserDetails, filterUsers } from "../models/userProfile.js";
-import { addReview, findAll, findAllByUser, addLike, addDislike } from "../models/reviewModel.js";
+import { addReview, findAll, findAllByUser, addLike, addDislike, deleteReview } from "../models/reviewModel.js";
 
 export const userResolvers = {
     Query : {
@@ -32,6 +32,10 @@ export const userResolvers = {
         addDislike: async (_, args) => {
             const dislikeAdded = await addDislike(args.id); 
             return dislikeAdded;
+        }, 
+        deleteReview: async (_, args) => {
+            const reviewRemoved = await deleteReview(args.id); 
+            return reviewRemoved;
         }
     }
 }

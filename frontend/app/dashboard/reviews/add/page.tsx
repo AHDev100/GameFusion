@@ -3,7 +3,6 @@
 import { useRef, useEffect, useState } from "react";
 import { useMutation, gql } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import review from "../page";
 
 export default function AddReview(){
 
@@ -11,7 +10,7 @@ export default function AddReview(){
         if (!token) return null;
     
         return JSON.parse(atob(token.split('.')[1]));
-      }
+    }
     
       const [ID, setID] = useState<string | null>("");
     

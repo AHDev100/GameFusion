@@ -13,6 +13,7 @@ export const userDefs = `#graphql
     }
 
     type Review {
+        id: ID
         reviewerID: ID
         review: String 
         rating: Int 
@@ -33,5 +34,6 @@ export const userDefs = `#graphql
         addReview(reviewerID: ID!, review: String!, rating: Int!, title: String!): Boolean
         addLike(id: ID!): Boolean
         addDislike(id: ID!): Boolean
+        deleteReview(id: ID!): Boolean
     }
 `;
