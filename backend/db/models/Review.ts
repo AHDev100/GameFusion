@@ -36,4 +36,4 @@ const Review = db.define('Review', {
 User.hasMany(Review, { foreignKey: 'reviewerId' });
 Review.belongsTo(User, { foreignKey: 'reviewerId' });
 
-export default Review;
+export default Review as any;

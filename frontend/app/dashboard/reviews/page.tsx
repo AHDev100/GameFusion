@@ -3,18 +3,9 @@
 import { MouseEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, gql } from "@apollo/client";
-// import { useEffect, useState } from "react"; - This bit, we can use for checking a person's profile
+import '../scroll.css'
 
 export default function review(){
-    // function parseJwt (token : String) { 
-    //     return JSON.parse(atob(token.split('.')[1]));;
-    // }
-
-    // const [token, setToken] = useState<String | null>("");
-
-    // useEffect(() => {
-    //     setToken(sessionStorage.getItem("token")); 
-    // }, [])
 
     const router = useRouter();
 
@@ -35,18 +26,18 @@ export default function review(){
 
     const handleRoute = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        router.push('/');
+        router.push('/dashboard/reviews/add');
     }
 
     return (
-        <div className="flex flex-col items-center bg-orange-400 w-full p-4">
+        <div className="flex flex-col items-center bg-orange-400 w-full p-4 overflow-y-auto min-h-screen">
           <h1 className="font-bold text-xl mb-4">Latest Reviews:</h1>
           {data &&
-            data.getAllReviews.map((review: any) => {
+            data.getAllReviews.map((review: any, index : any) => {
               return (
                 <div
                   className="bg-green-200 p-4 my-4 rounded-md w-full max-w-md"
-                  key={review.reviewerID}
+                  key={index}
                 >
                   <h1 className="text-lg font-bold mb-2">User ID: {review.reviewerID}</h1>
                   <p className="mb-2">Title: {review.title}</p>
@@ -54,6 +45,8 @@ export default function review(){
                   <p className="mb-2">Review: {review.review}</p>
                   <p className="mb-2">Likes: {review.likes}</p>
                   <p className="mb-2">Dislikes: {review.dislikes}</p>
+                  <button className="relative bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-9001">Like</button>
+                  <button className="relative mx-2 bg-red-700 hover:bg-red-800 font-medium text-sm px-5 py-2.5 text-center text-white dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Dislike</button>
                 </div>
               );
             })}

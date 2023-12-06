@@ -1,5 +1,5 @@
 import { getUserDetails, filterUsers } from "../models/userProfile.js";
-import { addReview, findAll, findAllByUser } from "../models/reviewModel.js";
+import { addReview, findAll, findAllByUser, addLike, addDislike } from "../models/reviewModel.js";
 
 export const userResolvers = {
     Query : {
@@ -16,14 +16,22 @@ export const userResolvers = {
             return reviews; 
         }, 
         getAllUserReviews: async (_, args) => {
-            const reviews = await findAllByUser(args.publisher); 
+            const reviews = await findAllByUser(args.reviewerID); 
             return reviews; 
         }
     }, 
     Mutation : {
         addReview: async (_, args) => {
-            const reviewAdded = await addReview(args.publisher, args.review, args.rating, args.title);
+            const reviewAdded = await addReview(args.reviewerID, args.review, args.rating, args.title);
             return reviewAdded;
+        }, 
+        addLike: async (_, args) => {
+            const likeAdded = await addLike(args.id); 
+            return likeAdded; 
+        }, 
+        addDislike: async (_, args) => {
+            const dislikeAdded = await addDislike(args.id); 
+            return dislikeAdded;
         }
     }
 }

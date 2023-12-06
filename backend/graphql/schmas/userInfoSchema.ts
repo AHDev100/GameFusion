@@ -26,10 +26,12 @@ export const userDefs = `#graphql
         getUserDetails(token: String): User
         getUsers(user: String!, filter: String!): [Users]
         getAllReviews: [Review]
-        getAllUserReviews(publisher: ID!): [Review]
+        getAllUserReviews(reviewerID: ID!): [Review]
     }
 
     type Mutation {
-        addReview(publisher: ID!, review: String!, rating: Int!, title: String!): Boolean
+        addReview(reviewerID: ID!, review: String!, rating: Int!, title: String!): Boolean
+        addLike(id: ID!): Boolean
+        addDislike(id: ID!): Boolean
     }
 `;

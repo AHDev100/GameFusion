@@ -10,7 +10,7 @@ export const addReview = async (reviewer : Number, review : String, rating: Numb
         dislikes: 0,
     }); 
     await newReview.save();
-    const reviewAdded = Review.findOne({where: {publisher: reviewer, review, rating, title}});
+    const reviewAdded = Review.findOne({where: {reviewerID: reviewer, review, rating, title}});
     return reviewAdded ? true : false;
 }; 
 
@@ -22,4 +22,28 @@ export const findAllByUser = (publisher: Number) => {
 export const findAll = async () => {
     const reviews = Review.findAll(); 
     return reviews; 
+}
+
+export const addLike = async (id : any) => {
+    const review = await Review.findOne({where : {id}});
+    if(review){
+        await review.update({likes: review.likes + 1}).then(() => {
+            return true; 
+        }).catch(() => {
+            return false; 
+        }); 
+    }
+    return false; 
+}; 
+
+export const addDislike = async (id : any) => {
+    const review = await Review.findOne({where: {id}});
+    if(review){
+        await review.update({dislikes: review.dislikes + 1}).then(() => {
+            return true; 
+        }).catch(() => {
+            return false; 
+        }); 
+    }
+    return false; 
 }
