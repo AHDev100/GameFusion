@@ -22,10 +22,6 @@ export default function review(){
         console.log(ID);
     }, []);
 
-    // useEffect(() => {
-    //   console.log(ID);
-    // }, [ID]);
-
     const router = useRouter();
 
     const GET_REVIEWS = gql`
