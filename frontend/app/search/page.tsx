@@ -1,5 +1,6 @@
 "use client";
 
+import '../dashboard/scroll.css';
 import { useQuery, gql } from "@apollo/client";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -41,16 +42,21 @@ export default function SearchPage(){
         <div className="flex justify-center relative mx-auto mt-4 mb-4 text-white font-semibold text-2xl">
           First 12 search results for: "{search}"
         </div>
-        <div className="grid grid-cols-4 gap-4">
-          {loading ? <p>Loading...</p> : games.map((game : Game, index : any) => (
-            <div key={index} className="bg-black text-white p-3 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <img className="w-full h-64 object-cover mb-4 hover:scale-105" src={game.background_image} alt={`${game.name}`}/>
-              <div>
-                <p className="font-semibold text-l text-white text-shadow-md">{game.name}</p>
-                {game.rating ? <Rating Rating={game.rating}/> : <p>Rating unavailable</p>}
-              </div>
-            </div>
-          ))}
+        <div className="grid grid-cols-3 gap-4">
+                {loading ? <p>Loading...</p> : games.map((game : Game, index : any) => (
+                    <div key={index} className="bg-black text-white p-3 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <img className="w-full h-64 object-cover mb-4 hover:scale-105" src={game.background_image} alt={`${game.name}`}/>
+                            <div className="flex flex-col items-center">
+                                {game.rating ? <Rating Rating={game.rating}/> : <p>Rating unavailable</p>}
+                                <p className="mb-3 font-semibold text-l text-white text-shadow-md">{game.name}</p>
+                                <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                                  <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                  View Game Details
+                                  </span>
+                                </button>
+                            </div>
+                    </div>
+                ))}
         </div>
         {error ? <p>Error...</p> : null}
       </div>
