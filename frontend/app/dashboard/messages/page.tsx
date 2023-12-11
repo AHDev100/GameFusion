@@ -46,7 +46,7 @@ export default function messages(){
                         <h1>Channel ID: {channel.id}</h1>
                         <h1>Channel Name: {channel.channelName}</h1>
                         <button onClick={() => {
-                            router.push(`/dashboard/messages/id?channelid=${channel.id}`);
+                            router.push(`/dashboard/messages/id?channelid=${channel.id}&channelName=${channel.channelName}`);
                         }} className="relative bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-9001">Open Channel</button>
                     </div>
                 ))}
