@@ -1,34 +1,62 @@
-//Server Imports
 import express from 'express';
+import { createServer } from 'http';
 import { ApolloServer } from 'apollo-server-express';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { execute, subscribe } from 'graphql';
+import { makeExecutableSchema } from 'graphql-tools';
 
-//GraphQL Imports
-import gameDefs from './graphql/schmas/gameSchema.js';
-import authDefs from './graphql/schmas/authdefs.js';
-import { userDefs } from './graphql/schmas/userInfoSchema.js';
+import gameDefs from './graphql/schemas/gameSchema.js';
+import authDefs from './graphql/schemas/authdefs.js';
+import { userDefs } from './graphql/schemas/userInfoSchema.js';
 import gameResolvers from './graphql/resolvers/gameResolvers.js';
 import authResolvers from './graphql/resolvers/authResolvers.js';
 import { userResolvers } from './graphql/resolvers/userResolvers.js';
+import { messageDefs } from './graphql/schemas/messageDefs.js';
+import { messageResolvers } from './graphql/resolvers/messageResolvers.js';
 
-//DB + Caching Imports
+// DB Imports
 import db from './db/db.js';
 import User from './db/models/User.js';
 import Review from './db/models/Review.js';
 
 const app = express();
+const httpServer = createServer(app);
 
 const server = new ApolloServer({
   typeDefs: [
     gameDefs,
     authDefs,
-    userDefs
+    userDefs,
+    messageDefs
   ],
   resolvers: [
-    gameResolvers, 
+    gameResolvers,
     authResolvers,
-    userResolvers
+    userResolvers,
+    messageResolvers
   ],
 });
+
+
+const schema = makeExecutableSchema({
+  typeDefs: [
+    gameDefs,
+    authDefs,
+    userDefs,
+    messageDefs
+  ],
+  resolvers: [
+    gameResolvers,
+    authResolvers,
+    userResolvers,
+    messageResolvers
+  ],
+});
+
+SubscriptionServer.create(
+  { execute, subscribe, schema },
+  { server: httpServer, path: '/graphql' },
+);
 
 await db.sync(); // Note: remove force option if you want to persist data
 console.log("All models were synchronized successfully.");
@@ -46,10 +74,10 @@ async function startServer() {
 
 app.get('/', (req, res) => {
   res.send('You need help');
-})
+});
 
 startServer().then(() => {
-  app.listen({ port: 4000 }, () => {
+  httpServer.listen(4000, () => {
     console.log(`🚀 Server ready at http://localhost:4000/graphql`);
   });
 }).catch((err) => {
