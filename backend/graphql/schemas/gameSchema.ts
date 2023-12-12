@@ -44,12 +44,25 @@ type Tags {
     results: [Tag]
 }
 
+type Detail {
+    id: ID
+    name: String
+    slug: String
+    image_background: String
+    games_count: Int
+    description: String
+}
+
 type Query {
     getGames(searchParam: String!): [Game]
     getMainGames: [Game]
     getPlatforms: Platforms
     getGenres: Genres
     getTags: Tags
+    getGameDetails(id: ID!): Game
+    getPlatformDetails(id: ID!): Detail
+    getGenreDetails(id: ID!): Detail
+    getTagDetails(id: ID!): Detail
 }
 `;
 

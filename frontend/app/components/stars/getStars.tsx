@@ -12,7 +12,7 @@ export default function Rating({ Rating } : { Rating : number }){
         }
     }
     return (
-        <div className="flex">
+        <div className="flex mb-4">
             {starsArray}
         </div>
     )
