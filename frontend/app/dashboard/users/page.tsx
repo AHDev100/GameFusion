@@ -81,25 +81,24 @@ export default function users(){
             <div className="w-full max-w-3xl flex flex-col items-center">
                 {data && data.getUsers && (
                     <>
-                    <h1 className="text-lg font-semibold mb-4">
-                        {data.getUsers.length} results found for: {inputRef.current?.value}
-                    </h1>
-
-                    {data.getUsers.map((user: any) => (
-                        <div
-                        key={user.id}
-                        className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex items-center space-x-4 mb-4 w-full max-w-md"
-                        >
-                        <span className="text-gray-900 dark:text-white">{user.username}</span>
-                        {user.pfp && (
-                            <img
-                            src={user.pfp}
-                            alt={`${user.username}'s profile`}
-                            className="w-8 h-8 ml-2 rounded-full"
-                            />
-                        )}
-                        </div>
-                    ))}
+                        <h1 className="text-lg font-semibold mb-4">
+                            {data.getUsers.length} results found for: {inputRef.current?.value}
+                        </h1>
+                        {data.getUsers.map((user: any) => (
+                            <div
+                            key={user.id}
+                            className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex items-center space-x-4 mb-4 w-full max-w-md"
+                            >
+                            <span className="text-gray-900 dark:text-white">{user.username}</span>
+                            {user.pfp && (
+                                <img
+                                src={user.pfp}
+                                alt={`${user.username}'s profile`}
+                                className="w-8 h-8 ml-2 rounded-full"
+                                />
+                            )}
+                            </div>
+                        ))}
                     </>
                 )}
             </div>

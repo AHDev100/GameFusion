@@ -1,4 +1,3 @@
-// logoutModel.js
 import User from "../../db/models/User.js";
 import { createClient } from 'redis';
 
@@ -13,16 +12,15 @@ const blacklistToken = async (token) => {
 const blackList = async (username, password) => {
   const user = await User.findOne({ where: { username, password } });
   if (!user) {
-    return false; // User not found, can't logout
+    return false; 
   }
 
-  // Blacklist the token
+  
   const token = user.dataValues.token;
   blacklistToken(token).then(result => {
-    console.log(result); // Log the result after the promise resolves
+    console.log(result); 
   });
 
-  // Reset the user's token in the database
   user.set({
     token: ""
   })

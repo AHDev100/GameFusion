@@ -29,12 +29,9 @@ export default function Dashboard(){
             setGames(data.getMainGames);
         }
     }, [data])
-    
-    // const decoded = parseJwt(sessionStorage.getItem("token"));
 
     return (
         <div className="overflow-y-auto justify-center flex-1 min-h-screen bg-gradient-to-r from-gray-700 to-emerald-800 border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700">
-            {/* <button onClick={() => {console.log(decoded)}}>Decode Token</button> */}
             <div className="grid grid-cols-3 gap-4">
                 {loading ? <p>Loading...</p> : games.map((game : Game, index : any) => (
                     <div key={index} className="bg-black text-white p-3 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
