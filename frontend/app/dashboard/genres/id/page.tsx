@@ -43,7 +43,7 @@ export default function GenreDetails(){
                         className="w-full h-64 object-cover rounded-lg mb-4" 
                         src={`${data.getGenreDetails.image_background}`}
                     />
-                    <p className="text-gray-700 dark:text-gray-300">{data.getGenreDetails.description}</p>
+                    <p className="text-gray-700 dark:text-gray-300">{removeHTMLText(data.getGenreDetails.description)}</p>
                     <div className="mt-4">
                       <h1 className="text-gray-600 dark:text-gray-400">{data.getGenreDetails.games_count}</h1>
                     </div>
