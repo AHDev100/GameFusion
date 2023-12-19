@@ -16,6 +16,12 @@ const GET_GENRE_DETAILS = gql`
     }
 `;
 
+function removeHTMLText(description: any){
+    const tempElement = document.createElement("div");
+    tempElement.innerHTML = description;
+    return tempElement.textContent || tempElement.innerText || "";
+}
+
 export default function GenreDetails(){
     const idParams = useSearchParams();
     const id = idParams.get('genreID');
@@ -25,18 +31,24 @@ export default function GenreDetails(){
            console.log(data); 
         }
     });
+
     return (
-        <>
-            {loading && <>Loading...</>}
-            {error && <>Error...</>}
+        <div className="flex-1 overflow-hidden">
+            {loading && <div className="text-center mt-8">Loading...</div>}
+            {error && <div className="text-center mt-8">Error...</div>}
             {data && 
-                <div>
-                    <p>{data.getGenreDetails.description}</p>
-                    <h1>{data.getGenreDetails.name}</h1>
-                    <h1>{data.getGenreDetails.games_count}</h1>
-                    <img src={`${data.getGenreDetails.image_background}`}/>
+                <div className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 p-8 min-h-screen shadow-md">
+                    <h1 className="text-3xl font-semibold mb-4 text-white flex justify-center">{data.getGenreDetails.name}</h1>
+                    <img 
+                        className="w-full h-64 object-cover rounded-lg mb-4" 
+                        src={`${data.getGenreDetails.image_background}`}
+                    />
+                    <p className="text-gray-700 dark:text-gray-300">{data.getGenreDetails.description}</p>
+                    <div className="mt-4">
+                      <h1 className="text-gray-600 dark:text-gray-400">{data.getGenreDetails.games_count}</h1>
+                    </div>
                 </div>
             }
-        </>
+        </div>
     )
 }
