@@ -19,6 +19,18 @@ interface Details {
     description: String
 }
 
+interface Listing{
+    status: String 
+    seller: String
+    listed_at: String
+    sold_at: String
+}
+
+interface GameMarket{
+    numListings: Number
+    listings: [Listing]
+}
+
 const gameResolvers = {
     Query : {
         getGames : async (_, args) => {
@@ -45,7 +57,10 @@ const gameResolvers = {
             let details = await fetch(`https://api.rawg.io/api/games/${args.id}?key=${key}`);
             let data = await details.json() as GameDetails;
             return data; 
-        }, 
+        },
+        getGameMarket: async(_, args) => {
+
+        },
         getPlatformDetails: async (_, args) => {
             let details = await fetch(`https://api.rawg.io/api/platforms/${args.id}?key=${key}`);
             let data = await details.json() as Details;

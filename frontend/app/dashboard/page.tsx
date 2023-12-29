@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 import { Game } from "../types/types";
@@ -9,6 +10,7 @@ import './scroll.css';
 const GET_MAIN_GAMES = gql`
   query GetMainGames {
     getMainGames {
+      id
       name
       background_image
       released
@@ -22,6 +24,8 @@ export default function Dashboard(){
     const [games, setGames] = useState<any>([]); 
     
     const { loading, error, data } = useQuery(GET_MAIN_GAMES);
+
+    const router = useRouter();
 
     useEffect(() => {
         if (data && !loading){
@@ -39,7 +43,9 @@ export default function Dashboard(){
                             <div className="flex flex-col items-center">
                             <p className="mb-3 font-semibold text-l text-white text-shadow-md">{game.name}</p>
                                 {game.rating ? <Rating Rating={game.rating}/> : <p>Rating unavailable</p>}
-                                <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                                <button onClick={() => {
+                                    router.push(`/dashboard/id?gameID=${game.id}`);
+                                }} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
                                     <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                                     View Game Details
                                     </span>

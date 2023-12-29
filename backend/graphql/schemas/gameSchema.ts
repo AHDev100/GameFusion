@@ -8,6 +8,18 @@ type Game {
     metacritic: Int
 }
 
+type listing {
+    status: String 
+    seller: String
+    listed_at: String
+    sold_at: String
+}
+
+type GameMarket {
+    numListings: Int
+    listings: [listing]
+}
+
 type Platform {
     id: ID
     name: String!
@@ -60,6 +72,7 @@ type Query {
     getGenres: Genres
     getTags: Tags
     getGameDetails(id: ID!): Game
+    getGameMarket(id: ID!): GameMarket
     getPlatformDetails(id: ID!): Detail
     getGenreDetails(id: ID!): Detail
     getTagDetails(id: ID!): Detail
