@@ -1,4 +1,4 @@
-import { fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags } from "../models/gamesModel.js";
+import { postListing, fetchMarket, fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags } from "../models/gamesModel.js";
 import fetch from "node-fetch";
 import key from "../../helpers/key.js";
 
@@ -17,18 +17,6 @@ interface Details {
     image_background: String
     games_count: Number
     description: String
-}
-
-interface Listing{
-    status: String 
-    seller: String
-    listed_at: String
-    sold_at: String
-}
-
-interface GameMarket{
-    numListings: Number
-    listings: [Listing]
 }
 
 const gameResolvers = {
@@ -59,7 +47,8 @@ const gameResolvers = {
             return data; 
         },
         getGameMarket: async(_, args) => {
-
+            const market = await fetchMarket(args.gameID);
+            return market; 
         },
         getPlatformDetails: async (_, args) => {
             let details = await fetch(`https://api.rawg.io/api/platforms/${args.id}?key=${key}`);
@@ -76,6 +65,11 @@ const gameResolvers = {
             let data = await details.json() as Details;
             return data;
         }, 
+    }, 
+    Mutation: {
+        addListing: async (_, args) => {
+            return postListing(args.gameID, args.status, args.sellerID, args.listed_at);
+        }
     }
  }; 
 

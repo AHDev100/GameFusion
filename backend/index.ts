@@ -18,6 +18,7 @@ import { messageResolvers } from './graphql/resolvers/messageResolvers.js';
 import db from './db/db.js';
 import User from './db/models/User.js';
 import Review from './db/models/Review.js';
+import { Listing } from './db/models/Listing.js';
 
 const app = express();
 const httpServer = createServer(app);
@@ -66,6 +67,9 @@ console.log(users);
 
 const review = await Review.findAll();
 console.log(review);
+
+const listings = await Listing.findAll(); 
+console.log(listings);
 
 async function startServer() {
   await server.start();

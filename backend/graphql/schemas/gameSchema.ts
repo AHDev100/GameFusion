@@ -1,4 +1,5 @@
 const gameDefs = `#graphql
+
 type Game {
     name: String!
     id: String
@@ -18,6 +19,7 @@ type listing {
 type GameMarket {
     numListings: Int
     listings: [listing]
+    available: String
 }
 
 type Platform {
@@ -72,10 +74,14 @@ type Query {
     getGenres: Genres
     getTags: Tags
     getGameDetails(id: ID!): Game
-    getGameMarket(id: ID!): GameMarket
+    getGameMarket(gameID: ID!): GameMarket
     getPlatformDetails(id: ID!): Detail
     getGenreDetails(id: ID!): Detail
     getTagDetails(id: ID!): Detail
+}
+
+type Mutation {
+    addListing(gameID: ID!, status: String!, sellerID: Int!, listed_at: String!): Boolean
 }
 `;
 
