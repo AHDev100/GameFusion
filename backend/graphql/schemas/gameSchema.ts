@@ -10,6 +10,7 @@ type Game {
 }
 
 type listing {
+    id: ID
     status: String 
     seller: String
     listed_at: String
