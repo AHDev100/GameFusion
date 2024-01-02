@@ -1,4 +1,5 @@
 const gameDefs = `#graphql
+
 type Game {
     name: String!
     id: String
@@ -6,6 +7,21 @@ type Game {
     released: String
     rating: Float
     metacritic: Int
+}
+
+type listing {
+    id: ID
+    gameID: ID
+    status: String 
+    seller: String
+    listed_at: String
+    sold_at: String
+}
+
+type GameMarket {
+    numListings: Int
+    listings: [listing]
+    available: String
 }
 
 type Platform {
@@ -60,9 +76,15 @@ type Query {
     getGenres: Genres
     getTags: Tags
     getGameDetails(id: ID!): Game
+    getGameMarket(gameID: ID!): GameMarket
+    getListings(sellerID: ID!): [listing]
     getPlatformDetails(id: ID!): Detail
     getGenreDetails(id: ID!): Detail
     getTagDetails(id: ID!): Detail
+}
+
+type Mutation {
+    addListing(gameID: ID!, status: String!, sellerID: Int!, listed_at: String!): Boolean
 }
 `;
 

@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import key from '../../helpers/key.js';
+import { Listing } from '../../db/models/Listing.js';
 
 interface Game {
     name: String
@@ -12,7 +13,44 @@ interface Game {
 interface ApiResponse {
     results: Game[];
 }
-  
+
+const fetchMarket = async (gameID: Number) => {
+    const listings = await Listing.findAll({
+        where: {gameID}
+    });
+    const numListings = await Listing.count({
+        where: {gameID}
+    });
+    return {
+        numListings, 
+        listings
+    }; 
+}
+
+const postListing = async (gameID : Number | String, status : String, sellerID : Number | String, listed_at : String) => {
+    try {
+        await Listing.create({
+            gameID, 
+            status, 
+            seller: sellerID, 
+            listed_at, 
+        });
+        return true; 
+    } catch (error) {
+        console.error("Mutation issue: ", error);
+        return false;
+    }
+}; 
+
+const userListings = async (sellerID: String | Number) => {
+    const listings = await Listing.findAll({
+        where: {
+            seller: sellerID
+        }
+    }); 
+    return listings; 
+}
+
 const fetchGames = async (searchParam : String) => {
     const response = await fetch(`https://api.rawg.io/api/games?key=${key}&search=${searchParam}}&page_size=12`);
     const data = await response.json() as ApiResponse;
@@ -42,4 +80,4 @@ const fetchTags = async () => {
     return data; 
 }
 
-export { fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags }; 
+export { userListings, fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags, fetchMarket, postListing }; 

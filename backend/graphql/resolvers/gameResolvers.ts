@@ -1,4 +1,4 @@
-import { fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags } from "../models/gamesModel.js";
+import { postListing, fetchMarket, fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags, userListings } from "../models/gamesModel.js";
 import fetch from "node-fetch";
 import key from "../../helpers/key.js";
 
@@ -45,7 +45,15 @@ const gameResolvers = {
             let details = await fetch(`https://api.rawg.io/api/games/${args.id}?key=${key}`);
             let data = await details.json() as GameDetails;
             return data; 
-        }, 
+        },
+        getGameMarket: async(_, args) => {
+            const market = await fetchMarket(args.gameID);
+            return market; 
+        },
+        getListings: async(_, args) => {
+            const listings = await userListings(args.sellerID);
+            return listings;
+        },
         getPlatformDetails: async (_, args) => {
             let details = await fetch(`https://api.rawg.io/api/platforms/${args.id}?key=${key}`);
             let data = await details.json() as Details;
@@ -61,6 +69,11 @@ const gameResolvers = {
             let data = await details.json() as Details;
             return data;
         }, 
+    }, 
+    Mutation: {
+        addListing: async (_, args) => {
+            return postListing(args.gameID, args.status, args.sellerID, args.listed_at);
+        }
     }
  }; 
 

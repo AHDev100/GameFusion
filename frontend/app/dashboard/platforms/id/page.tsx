@@ -16,6 +16,12 @@ const GET_PLATFORM_DETAILS = gql`
     }
 `;
 
+function removeHTMLText(description: any){
+    const tempElement = document.createElement("div");
+    tempElement.innerHTML = description;
+    return tempElement.textContent || tempElement.innerText || "";
+}
+
 export default function PlatformDetails(){
     const idParams = useSearchParams();
     const id = idParams.get('platformID');
@@ -26,17 +32,25 @@ export default function PlatformDetails(){
         }
     });
     return (
-        <>
-            {loading && <>Loading...</>}
-            {error && <>Error...</>}
-            {data && 
-                <div>
-                    <p>{data.getPlatformDetails.description}</p>
-                    <h1>{data.getPlatformDetails.name}</h1>
-                    <h1>{data.getPlatformDetails.games_count}</h1>
-                    <img src={`${data.getPlatformDetails.image_background}`}/>
+        <div className="flex-1 overflow-hidden">
+            {loading && <div className="text-center mt-8">Loading...</div>}
+            {error && <div className="text-center mt-8">Error...</div>}
+            {data &&
+                <div className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 p-8 min-h-screen shadow-md">
+                    <h1 className="text-3xl font-semibold mb-4 text-white flex justify-center">{data.getPlatformDetails.name}</h1>
+                    <img
+                        src={`${data.getPlatformDetails.image_background}`}
+                        alt={data.getPlatformDetails.name}
+                        className="w-full h-64 object-cover rounded-lg mb-4"
+                    />
+                    <p className="text-gray-700 dark:text-gray-300">
+                        {removeHTMLText(data.getPlatformDetails.description)}
+                    </p>
+                    <div className="mt-4">
+                        <p className="text-gray-600 dark:text-gray-400">Games Count: {data.getPlatformDetails.games_count}</p>
+                    </div>
                 </div>
             }
-        </>
+        </div>
     )
 }
