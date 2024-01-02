@@ -6,8 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 export default function pageListings() {
     const ADD_LISTING = gql`
-        mutation AddListing($gameId: ID!, $status: String!, $sellerId: Int!, $listedAt: String!){
-            addListing(gameID: $gameId, status: $status, sellerID: $sellerId, listed_at: $listedAt)
+        mutation AddListing($gameID: ID!, $status: String!, $sellerID: Int!, $listed_at: String!){
+            addListing(gameID: $gameID, status: $status, sellerID: $sellerID, listed_at: $listed_at)
         }
     `;
 
@@ -25,13 +25,29 @@ export default function pageListings() {
     `;
 
     const router = useRouter();
+    const gameID = useSearchParams().get('gameID'); 
 
     const [sell] = useMutation(ADD_LISTING);
     const [getGames, { loading, data }] = useLazyQuery(SEARCH_GAME);
 
     const [searchQuery, setSearchQuery] = useState("");
     const [gameSelected, setGameSelected] = useState(false);
+    function parseJwt(token: string | null) {
+        if (!token) return null;
     
+        return JSON.parse(atob(token.split('.')[1]));
+    }
+    
+    const [ID, setID] = useState<string | null>("");
+
+    useEffect(() => {
+        const token = sessionStorage.getItem("token");
+        if (token) {
+            const parsedID = parseJwt(token).id;
+            setID(parsedID);
+        }
+    }, []);
+
     useEffect(() => {
         if (!gameSelected && searchQuery.trim() !== "") {
             getGames({ variables: { searchParam: searchQuery } });
@@ -93,11 +109,17 @@ export default function pageListings() {
                                         event.preventDefault();
                                         await sell({
                                             variables: {
-
+                                                gameID, 
+                                                status: "For Sale", 
+                                                listed_at: new Date().toDateString(),
+                                                sellerID: ID
                                             }
-                                        }).then(() => {
+                                        }).then((res) => {
+                                            console.log(res);
                                             setGameSelected(false);
                                             router.back(); 
+                                        }).catch((err) => {
+                                            console.error(err);
                                         })
                                     }}
                                     type="submit"

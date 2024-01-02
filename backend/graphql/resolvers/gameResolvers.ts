@@ -1,4 +1,4 @@
-import { postListing, fetchMarket, fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags } from "../models/gamesModel.js";
+import { postListing, fetchMarket, fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags, userListings } from "../models/gamesModel.js";
 import fetch from "node-fetch";
 import key from "../../helpers/key.js";
 
@@ -49,6 +49,10 @@ const gameResolvers = {
         getGameMarket: async(_, args) => {
             const market = await fetchMarket(args.gameID);
             return market; 
+        },
+        getListings: async(_, args) => {
+            const listings = await userListings(args.sellerID);
+            return listings;
         },
         getPlatformDetails: async (_, args) => {
             let details = await fetch(`https://api.rawg.io/api/platforms/${args.id}?key=${key}`);

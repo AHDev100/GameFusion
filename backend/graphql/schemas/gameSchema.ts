@@ -11,6 +11,7 @@ type Game {
 
 type listing {
     id: ID
+    gameID: ID
     status: String 
     seller: String
     listed_at: String
@@ -76,6 +77,7 @@ type Query {
     getTags: Tags
     getGameDetails(id: ID!): Game
     getGameMarket(gameID: ID!): GameMarket
+    getListings(sellerID: ID!): [listing]
     getPlatformDetails(id: ID!): Detail
     getGenreDetails(id: ID!): Detail
     getTagDetails(id: ID!): Detail

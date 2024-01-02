@@ -37,9 +37,18 @@ const postListing = async (gameID : Number | String, status : String, sellerID :
         });
         return true; 
     } catch (error) {
-        console.error(error);
+        console.error("Mutation issue: ", error);
         return false;
     }
+}; 
+
+const userListings = async (sellerID: String | Number) => {
+    const listings = await Listing.findAll({
+        where: {
+            seller: sellerID
+        }
+    }); 
+    return listings; 
 }
 
 const fetchGames = async (searchParam : String) => {
@@ -71,4 +80,4 @@ const fetchTags = async () => {
     return data; 
 }
 
-export { fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags, fetchMarket, postListing }; 
+export { userListings, fetchGames, dashboardGames, fetchPlatforms, fetchGenres, fetchTags, fetchMarket, postListing }; 
